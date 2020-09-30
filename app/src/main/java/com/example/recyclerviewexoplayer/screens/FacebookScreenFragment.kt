@@ -7,6 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.example.recyclerviewexoplayer.R
@@ -20,30 +21,38 @@ import com.example.recyclerviewexoplayer.viewModels.MediaViewModel
 import kotlinx.android.synthetic.main.fragment_facebook_player.*
 
 class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
+
+    //region variables
     private var mAdapter: FacebookRecyclerAdapter? = null
     private val modelList = ArrayList<MediaObject>()
-
     private lateinit var scrollListener: RecyclerViewScrollListener
+    //endregion
 
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setAdapter()
 
+        //region ViewModel
         val model: MediaViewModel by viewModels()
         model.getMedia().observe(requireActivity(), {
             mAdapter?.updateList(arrayListOf(*it.toTypedArray()))
         })
+        //endregion
+
     }
 
     private fun setAdapter() {
+        //region adapter
         mAdapter = FacebookRecyclerAdapter(requireActivity(), modelList)
         recycler_view!!.setHasFixedSize(true)
+        recycler_view!!.maxFlingVelocity
+        recycler_view!!.setItemViewCacheSize(5)
+        //endregion
 
-        val layoutManager = PreloadLinearLayoutManager(activity)
+        //region layoutManager
+        val layoutManager =
+            PreloadLinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         layoutManager.setPreloadItemCount(5)
         recycler_view!!.layoutManager = layoutManager
         recycler_view!!.adapter = mAdapter
@@ -55,6 +64,9 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
             }
 
         }
+        //endregion
+
+        //region hide recyclerview until first video is ready to be played.
         hide.observe(viewLifecycleOwner, {
             if (it) {
                 recycler_view!!.visibility = VISIBLE
@@ -64,6 +76,9 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
                 pg1.visibility = VISIBLE
             }
         })
+        //endregion
+
+        //region SnapHelper
         val snapHelper: SnapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recycler_view)
         recycler_view!!.addOnScrollListener(scrollListener)
@@ -73,10 +88,16 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
 
             }
         })
+        //endregion
+
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
+        //region release players
         releaseAllPlayers()
+        //endregion
     }
+
 }
+

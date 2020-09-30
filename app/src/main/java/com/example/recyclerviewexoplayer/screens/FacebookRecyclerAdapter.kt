@@ -21,8 +21,7 @@ class FacebookRecyclerAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     PlayerStateCallback {
 
-    private var mItemClickListener: OnItemClickListener? =
-        null
+    private var mItemClickListener: OnItemClickListener? = null
 
     fun updateList(modelList: ArrayList<MediaObject>) {
         this.modelList = modelList
@@ -31,14 +30,15 @@ class FacebookRecyclerAdapter(
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
-        viewType: Int
-    ): VideoPlayerViewHolder {
+        viewType: Int): VideoPlayerViewHolder {
+
         val binding: FacebookTimelineItemRecyclerListBinding = DataBindingUtil.inflate(
             LayoutInflater.from(viewGroup.context),
             R.layout.facebook_timeline_item_recycler_list,
             viewGroup,
             false
         )
+
         return VideoPlayerViewHolder(binding)
     }
 
@@ -46,10 +46,8 @@ class FacebookRecyclerAdapter(
         holder: RecyclerView.ViewHolder,
         position: Int
     ) {
-
         if (holder is VideoPlayerViewHolder) {
             val model = getItem(position)
-
             holder.onBind(model)
         }
     }
@@ -73,11 +71,7 @@ class FacebookRecyclerAdapter(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(
-            view: View?,
-            position: Int,
-            model: MediaObject?
-        )
+        fun onItemClick(view: View?, position: Int, model: MediaObject?)
     }
 
     inner class VideoPlayerViewHolder(private val binding: FacebookTimelineItemRecyclerListBinding) :
@@ -108,7 +102,8 @@ class FacebookRecyclerAdapter(
 
     override fun onStartedPlaying(player: Player) {
         Log.d("playVideo", "start" + player.contentDuration)
-
     }
+
     override fun onFinishedPlaying(player: Player) {}
+
 }

@@ -52,7 +52,7 @@ class PreloadLinearLayoutManager : LinearLayoutManager {
 
         val delta = if (orientation == HORIZONTAL) dx else dy
         if (childCount == 0 || delta == 0) {
-            // can't support this scroll, so don't bother prefetching
+            // can't support this scroll, so don't bother pre-fetching
             return
         }
         val layoutDirection = if (delta > 0) 1 else -1

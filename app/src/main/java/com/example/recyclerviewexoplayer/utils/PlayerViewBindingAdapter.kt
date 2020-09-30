@@ -16,21 +16,26 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 
+//region context function
 fun Context.toast(text: String) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
+//endregion
 
+//region const values for buffer strategy
 private const val MIN_BUFFER = 65536
 private const val MAX_BUFFER = 131072
 private const val BUFFER_PLAYBACK = 8064
 private const val BUFFER_PLAYBACK_RE_BUFFER = 8064
 private const val BACK_BUFFER_PLAYBACK = 80064
 val hide = MutableLiveData<Boolean>()
-
+//endregion
 
 class PlayerViewAdapter {
 
     companion object {
+
+        //region companion object variables
         private var playersMap: MutableMap<Int, SimpleExoPlayer> = mutableMapOf()
         private var currentPlayingVideo: Pair<Int, SimpleExoPlayer>? = null
         fun releaseAllPlayers() {
@@ -38,27 +43,31 @@ class PlayerViewAdapter {
                 it.value.release()
             }
         }
+        //endregion
 
-
+        //region release_recycle_exoPlayers
         fun releaseRecycledPlayers(index: Int) {
             playersMap[index]?.release()
         }
+        //endregion
 
+        //region pauseCurrentPlayingVideo
         private fun pauseCurrentPlayingVideo() {
             if (currentPlayingVideo != null) {
                 currentPlayingVideo?.second?.playWhenReady = false
             }
         }
+        //endregion
 
+        //region playIndexThenPausePreviousPlayer
         fun playIndexThenPausePreviousPlayer(index: Int) {
             if (playersMap[index]?.playWhenReady == false) {
                 pauseCurrentPlayingVideo()
                 playersMap[index]?.playWhenReady = true
                 currentPlayingVideo = Pair(index, playersMap[index]!!)
             }
-
         }
-
+        //endregion
 
         @JvmStatic
         @BindingAdapter(
@@ -71,32 +80,28 @@ class PlayerViewAdapter {
             item_index: Int? = null
         ) {
 
-
+            //region trackSelector & loadControl & Exoplayer
             val trackSelector: TrackSelector = DefaultTrackSelector(context)
 
             val loadControl = DefaultLoadControl.Builder()
                 .setBufferDurationsMs(
                     MIN_BUFFER, MAX_BUFFER,
                     BUFFER_PLAYBACK, BUFFER_PLAYBACK_RE_BUFFER
-                )
-                .setBackBuffer(BACK_BUFFER_PLAYBACK, true)
+                ).setBackBuffer(BACK_BUFFER_PLAYBACK, true)
                 .setPrioritizeTimeOverSizeThresholds(true)
                 .build()
 
             val player = SimpleExoPlayer.Builder(context)
                 .setLoadControl(loadControl)
                 .setTrackSelector(trackSelector)
-                .setBandwidthMeter(
-                    DefaultBandwidthMeter.Builder(context)
-                        .build()
-                )
+                .setBandwidthMeter(DefaultBandwidthMeter.Builder(context).build())
                 .setHandleAudioBecomingNoisy(true)
                 .build()
 
             player.playWhenReady = false
             player.repeatMode = Player.REPEAT_MODE_ALL
             setKeepContentOnPlayerReset(true)
-            this.useController = false
+            this.useController = true
             val mediaSource = ProgressiveMediaSource
                 .Factory(DefaultHttpDataSourceFactory("RecyclerViewExoPlayer"))
                 .createMediaSource(
@@ -105,14 +110,17 @@ class PlayerViewAdapter {
 
             player.setMediaSource(mediaSource)
             player.prepare()
-
             this.player = player
+            //endregion
 
+            //region playersMap
             if (playersMap.containsKey(item_index))
                 playersMap.remove(item_index)
             if (item_index != null)
                 playersMap[item_index] = player
+            //endregion
 
+            //region player Listener
             this.player!!.addListener(object : Player.EventListener {
 
                 override fun onPlayerError(error: ExoPlaybackException) {
@@ -143,6 +151,8 @@ class PlayerViewAdapter {
                     }
                 }
             })
+            //endregion
+
         }
     }
 }

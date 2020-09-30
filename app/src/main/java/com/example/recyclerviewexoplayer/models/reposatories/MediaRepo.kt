@@ -45,7 +45,6 @@ class MediaRepo {
                     )
                 )
             )
-
             it.onComplete()
         }
 
