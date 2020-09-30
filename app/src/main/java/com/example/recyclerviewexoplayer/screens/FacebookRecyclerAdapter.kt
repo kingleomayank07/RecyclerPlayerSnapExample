@@ -75,7 +75,8 @@ class FacebookRecyclerAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(model: MediaObject) {
-            // handel on item click
+
+            //region handel on item click
             binding.root.setOnClickListener {
                 mItemClickListener!!.onItemClick(
                     it,
@@ -83,13 +84,16 @@ class FacebookRecyclerAdapter(
                     model
                 )
             }
+            //endregion
 
+            //region List_Binding
             binding.apply {
                 dataModel = model
                 callback = this@FacebookRecyclerAdapter
                 index = adapterPosition
                 executePendingBindings()
             }
+            //endregion
         }
     }
 

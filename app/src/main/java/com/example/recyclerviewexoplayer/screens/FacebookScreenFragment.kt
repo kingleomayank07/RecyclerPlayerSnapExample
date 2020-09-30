@@ -96,12 +96,16 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
 
     override fun onPause() {
         super.onPause()
+        //region pause current player
         pauseAllPlayers()
+        //endregion
     }
 
     override fun onResume() {
         super.onResume()
+        //region play current player
         playAllPlayers()
+        //endregion
     }
 
     override fun onDestroy() {
