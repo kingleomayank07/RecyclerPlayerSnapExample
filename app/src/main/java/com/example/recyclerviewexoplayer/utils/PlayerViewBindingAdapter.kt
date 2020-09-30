@@ -43,6 +43,19 @@ class PlayerViewAdapter {
                 it.value.release()
             }
         }
+
+        fun pauseAllPlayers() {
+            playersMap.map {
+                it.value.pause()
+            }
+        }
+
+
+        fun playAllPlayers() {
+            playersMap.map {
+                it.value.play()
+            }
+        }
         //endregion
 
         //region release_recycle_exoPlayers

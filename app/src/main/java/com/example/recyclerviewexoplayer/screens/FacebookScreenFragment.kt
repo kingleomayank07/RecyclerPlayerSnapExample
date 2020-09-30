@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.example.recyclerviewexoplayer.R
 import com.example.recyclerviewexoplayer.models.MediaObject
+import com.example.recyclerviewexoplayer.utils.PlayerViewAdapter.Companion.pauseAllPlayers
+import com.example.recyclerviewexoplayer.utils.PlayerViewAdapter.Companion.playAllPlayers
 import com.example.recyclerviewexoplayer.utils.PlayerViewAdapter.Companion.playIndexThenPausePreviousPlayer
 import com.example.recyclerviewexoplayer.utils.PlayerViewAdapter.Companion.releaseAllPlayers
 import com.example.recyclerviewexoplayer.utils.PreloadLinearLayoutManager
@@ -90,6 +92,16 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
         })
         //endregion
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pauseAllPlayers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        playAllPlayers()
     }
 
     override fun onDestroy() {
