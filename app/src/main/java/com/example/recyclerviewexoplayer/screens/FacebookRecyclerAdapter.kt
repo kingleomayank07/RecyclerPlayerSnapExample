@@ -28,9 +28,7 @@ class FacebookRecyclerAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(
-        viewGroup: ViewGroup,
-        viewType: Int): VideoPlayerViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VideoPlayerViewHolder {
 
         val binding: FacebookTimelineItemRecyclerListBinding = DataBindingUtil.inflate(
             LayoutInflater.from(viewGroup.context),
@@ -42,10 +40,7 @@ class FacebookRecyclerAdapter(
         return VideoPlayerViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is VideoPlayerViewHolder) {
             val model = getItem(position)
             holder.onBind(model)
@@ -74,8 +69,10 @@ class FacebookRecyclerAdapter(
         fun onItemClick(view: View?, position: Int, model: MediaObject?)
     }
 
-    inner class VideoPlayerViewHolder(private val binding: FacebookTimelineItemRecyclerListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class VideoPlayerViewHolder(
+        private val binding:
+        FacebookTimelineItemRecyclerListBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(model: MediaObject) {
             // handel on item click

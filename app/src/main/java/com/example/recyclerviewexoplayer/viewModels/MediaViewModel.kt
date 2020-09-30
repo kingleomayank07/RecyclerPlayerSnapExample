@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.example.recyclerviewexoplayer.models.MediaObject
 import com.example.recyclerviewexoplayer.models.reposatories.MediaRepo
 
-class MediaViewModel: ViewModel() {
+class MediaViewModel : ViewModel() {
     private val mediaData: MutableLiveData<MutableList<MediaObject>> = MediaRepo().getMediaData()
-    fun getMedia(): MutableLiveData<MutableList<MediaObject>>{
+    fun getMedia(): MutableLiveData<MutableList<MediaObject>> {
         return mediaData
     }
 }

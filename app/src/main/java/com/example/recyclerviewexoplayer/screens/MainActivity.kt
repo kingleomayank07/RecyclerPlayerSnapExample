@@ -1,10 +1,11 @@
-package com.example.recyclerviewexoplayer
+package com.example.recyclerviewexoplayer.screens
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.recyclerviewexoplayer.R
 import com.example.recyclerviewexoplayer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

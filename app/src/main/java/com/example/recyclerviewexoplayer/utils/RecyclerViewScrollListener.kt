@@ -1,17 +1,17 @@
 package com.example.recyclerviewexoplayer.utils
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class RecyclerViewScrollListener : RecyclerView.OnScrollListener() {
 
-    private var firstVisibleItem = 0
-    private var visibleItemCount = 0
-
-
+    //region variables
     @Volatile
     private var mEnabled = true
+    private var firstVisibleItem = 0
+    private var visibleItemCount = 0
     private var mPreLoadCount = 5
+    //endregion
+
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         if (mEnabled) {

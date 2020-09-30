@@ -46,10 +46,9 @@ class PreloadLinearLayoutManager : LinearLayoutManager {
 
     override fun collectAdjacentPrefetchPositions(
         dx: Int, dy: Int, state: RecyclerView.State,
-        layoutPrefetchRegistry: LayoutPrefetchRegistry
-    ) {
-        super.collectAdjacentPrefetchPositions(dx, dy, state, layoutPrefetchRegistry)
+        layoutPrefetchRegistry: LayoutPrefetchRegistry) {
 
+        super.collectAdjacentPrefetchPositions(dx, dy, state, layoutPrefetchRegistry)
         val delta = if (orientation == HORIZONTAL) dx else dy
         if (childCount == 0 || delta == 0) {
             // can't support this scroll, so don't bother pre-fetching
