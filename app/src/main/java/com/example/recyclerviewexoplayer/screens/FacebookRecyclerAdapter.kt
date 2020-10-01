@@ -18,8 +18,7 @@ import java.util.*
 class FacebookRecyclerAdapter(
     private val mContext: Context,
     private var modelList: ArrayList<MediaObject>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
-    PlayerStateCallback {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), PlayerStateCallback {
 
     private var mItemClickListener: OnItemClickListener? = null
 
@@ -29,7 +28,6 @@ class FacebookRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): VideoPlayerViewHolder {
-
         val binding: FacebookTimelineItemRecyclerListBinding = DataBindingUtil.inflate(
             LayoutInflater.from(viewGroup.context),
             R.layout.facebook_timeline_item_recycler_list,
@@ -94,6 +92,7 @@ class FacebookRecyclerAdapter(
                 executePendingBindings()
             }
             //endregion
+
         }
     }
 

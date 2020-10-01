@@ -38,6 +38,8 @@ class PlayerViewAdapter {
         //region companion object variables
         private var playersMap: MutableMap<Int, SimpleExoPlayer> = mutableMapOf()
         private var currentPlayingVideo: Pair<Int, SimpleExoPlayer>? = null
+
+
         fun releaseAllPlayers() {
             playersMap.map {
                 it.value.release()
@@ -50,7 +52,6 @@ class PlayerViewAdapter {
             }
         }
 
-
         fun playAllPlayers() {
             playersMap.map {
                 it.value.play()
@@ -60,7 +61,9 @@ class PlayerViewAdapter {
 
         //region release_recycle_exoPlayers
         fun releaseRecycledPlayers(index: Int) {
+            playersMap[index]?.stop()
             playersMap[index]?.release()
+//            playersMap.remove(index)
         }
         //endregion
 
@@ -78,6 +81,7 @@ class PlayerViewAdapter {
                 pauseCurrentPlayingVideo()
                 playersMap[index]?.playWhenReady = true
                 currentPlayingVideo = Pair(index, playersMap[index]!!)
+
             }
         }
         //endregion
@@ -115,6 +119,7 @@ class PlayerViewAdapter {
             player.repeatMode = Player.REPEAT_MODE_ALL
             setKeepContentOnPlayerReset(true)
             this.useController = true
+
             val mediaSource = ProgressiveMediaSource
                 .Factory(DefaultHttpDataSourceFactory("RecyclerViewExoPlayer"))
                 .createMediaSource(

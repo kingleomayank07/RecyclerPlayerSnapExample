@@ -3,8 +3,6 @@ package com.example.recyclerviewexoplayer.screens
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +16,6 @@ import com.example.recyclerviewexoplayer.utils.PlayerViewAdapter.Companion.playI
 import com.example.recyclerviewexoplayer.utils.PlayerViewAdapter.Companion.releaseAllPlayers
 import com.example.recyclerviewexoplayer.utils.PreloadLinearLayoutManager
 import com.example.recyclerviewexoplayer.utils.RecyclerViewScrollListener
-import com.example.recyclerviewexoplayer.utils.hide
 import com.example.recyclerviewexoplayer.viewModels.MediaViewModel
 import kotlinx.android.synthetic.main.fragment_facebook_player.*
 
@@ -68,17 +65,17 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
         }
         //endregion
 
-        //region hide recyclerview until first video is ready to be played.
-        hide.observe(viewLifecycleOwner, {
-            if (it) {
-                recycler_view!!.visibility = VISIBLE
-                pg1.visibility = GONE
-            } else {
-                recycler_view!!.visibility = GONE
-                pg1.visibility = VISIBLE
-            }
-        })
-        //endregion
+        /*    //region hide recyclerview until first video is ready to be played.
+            hide.observe(viewLifecycleOwner, {
+                if (it) {
+                    recycler_view!!.visibility = VISIBLE
+                    pg1.visibility = GONE
+                } else {
+                    recycler_view!!.visibility = GONE
+                    pg1.visibility = VISIBLE
+                }
+            })
+            //endregion*/
 
         //region SnapHelper
         val snapHelper: SnapHelper = PagerSnapHelper()
@@ -86,9 +83,7 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
         recycler_view!!.addOnScrollListener(scrollListener)
         scrollListener.setPreLoadCount(5)
         mAdapter!!.setOnItemClickListener(object : FacebookRecyclerAdapter.OnItemClickListener {
-            override fun onItemClick(view: View?, position: Int, model: MediaObject?) {
-
-            }
+            override fun onItemClick(view: View?, position: Int, model: MediaObject?) {}
         })
         //endregion
 
