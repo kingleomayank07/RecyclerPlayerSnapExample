@@ -1,5 +1,6 @@
 package com.example.recyclerviewexoplayer.utils
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class RecyclerViewScrollListener : RecyclerView.OnScrollListener() {
@@ -16,7 +17,7 @@ abstract class RecyclerViewScrollListener : RecyclerView.OnScrollListener() {
         super.onScrolled(recyclerView, dx, dy)
         if (mEnabled) {
             val manager = recyclerView.layoutManager
-            require(manager is PreloadLinearLayoutManager) { "Expected recyclerview to have linear layout manager" }
+            require(manager is LinearLayoutManager) { "Expected recyclerview to have linear layout manager" }
             visibleItemCount = manager.childCount
             firstVisibleItem = manager.findFirstCompletelyVisibleItemPosition()
             onItemIsFirstVisibleItem(firstVisibleItem)

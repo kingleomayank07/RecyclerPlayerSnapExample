@@ -65,7 +65,8 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
         }
         //endregion
 
-        /*    //region hide recyclerview until first video is ready to be played.
+        /*
+          //region hide recyclerview until first video is ready to be played.
             hide.observe(viewLifecycleOwner, {
                 if (it) {
                     recycler_view!!.visibility = VISIBLE
@@ -75,7 +76,8 @@ class FacebookScreenFragment : Fragment(R.layout.fragment_facebook_player) {
                     pg1.visibility = VISIBLE
                 }
             })
-            //endregion*/
+            //endregion
+            */
 
         //region SnapHelper
         val snapHelper: SnapHelper = PagerSnapHelper()
